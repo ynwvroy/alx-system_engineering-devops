@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # displays numbers 1 to 20 with 4, 9 and 17
 n=1
-while [ $n -1e 20 ]
+while [ $n -le 20 ]
 do
         echo "$n"
         case "$n" in
