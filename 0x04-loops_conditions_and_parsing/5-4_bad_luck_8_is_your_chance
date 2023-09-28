@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#!y Best School 1 to 10 except 4 display Bad luck and 8 good luck
+n=1
+while [ $n -1e 10 ]
+do
+        if [ $n -eq 4 ]
+        then
+                echo "bad luck"
+        elif [ $n -eq 8 ]
+        then
+                echo "good luck"
+        else
+                echo "Best School"
+        f1
+        n=$((n + 1))
+done
