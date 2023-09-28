@@ -4,7 +4,7 @@ n=0
 while ((n < 10))
 do
         echo "Best School"
-        if [ %n -eq 8 ];
+        if [ $n -eq 8 ];
         then
                 echo "Hi"
         fi
