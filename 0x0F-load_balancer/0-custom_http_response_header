@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# install nginx web server with fw requirements and default home page
+# install nginx web server with the fw requirements and a default home page
 
 sudo apt-get -y update
 sudo apt-get -y install nginx
