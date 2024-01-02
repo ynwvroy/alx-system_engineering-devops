@@ -1,48 +1,31 @@
 #!/usr/bin/python3
-"""Script to gather data from a REST API for a given employee ID
-and display TODO list progress.
-"""
+"""Accessing a REST API for todo lists of employees"""
 
 import requests
-from sys import argv
+import sys
 
 
-def get_employee_todo_progress(employee_id):
-    base_url = "https://jsonplaceholder.typicode.com/"
+if __name__ == '__main__':
+    employeeId = sys.argv[1]
+    baseUrl = "https://jsonplaceholder.typicode.com/users"
+    url = baseUrl + "/" + employeeId
 
-    # Fetch user data
-    user_response = requests.get(f"{base_url}users/{employee_id}")
-    user_data = user_response.json()
+    response = requests.get(url)
+    employeeName = response.json().get('name')
 
-    # Fetch TODO list data
-    todo_response = requests.get(f"{base_url}todos?userId={employee_id}")
-    todo_data = todo_response.json()
+    todoUrl = url + "/todos"
+    response = requests.get(todoUrl)
+    tasks = response.json()
+    done = 0
+    done_tasks = []
 
-    # Calculate progress
-    total_tasks = len(todo_data)
-    completed_tasks = sum(task['completed'] for task in todo_data)
+    for task in tasks:
+        if task.get('completed'):
+            done_tasks.append(task)
+            done += 1
 
-    # Display progress information
-    print(f"Employee Name: {user_data['name']} is done with tasks "
-          f"({completed_tasks}/{total_tasks}):")
-    
-    # Check if there are tasks to display
-    if total_tasks > 0:
-        for task in todo_data:
-            # Display completed tasks
-            if task['completed']:
-                print(f"\t{task['title']}")
-    else:
-        print("\tNo tasks found for this employee.")
+    print("Employee {} is done with tasks({}/{}):"
+          .format(employeeName, done, len(tasks)))
 
-
-if __name__ == "__main__":
-    if len(argv) != 2:
-        print("Usage: python3 script.py <employee_id>")
-    else:
-        try:
-            employee_id = int(argv[1])
-            get_employee_todo_progress(employee_id)
-        except ValueError:
-            print("Please provide a valid integer for the employee ID.")
-
+    for task in done_tasks:
+        print("\t {}".format(task.get('title')))
